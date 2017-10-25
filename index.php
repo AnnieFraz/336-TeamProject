@@ -45,7 +45,7 @@
         $sql = "SELECT * FROM songs WHERE song_title=(':parameter1')";
          
         $stmt= $dbConn->prepare($query);
-        $stmt->execute(array(':parameter1'=>$_POST['filter_criteria']));
+        $stmt->execute(':parameter1'=>$_POST['filter_criteria']);
          while($row=$stmt->fetch()){
          echo "<tr>
         <td>{$row['song_artist']}</td>

@@ -25,7 +25,7 @@
           	   	  <option value="artist"> Artist </option>
           	   	  <option value="playlist"> Playlist </option>
           	   </select>
-          	   <select name="choice">
+          	   <select name="order">
           	   	  <option value="asc"> A-Z </option>
           	   	  <option value="desc"> Z-A </option>
           	   </select>
@@ -41,14 +41,23 @@ while($row=$stmt->fetch()){
     echo "<tr><td>{$row['song_artist']}</td></tr>";
          //$sql = "";
          
-         //if ($_POST['choice'] == 'song') {
-                // $sql = "SELECT * FROM song WHERE song_title= " .$filter_criteria;
+         //if ($_POST['choice'] == 'song' && $_POST['order'] == 'desc') {
+                // $sql = "SELECT * FROM songs WHERE song_title=(':parameter1) ORDER BY DESC";
         // }
-        // if ($_POST['choice'] == 'artist') {
-                // $sql = "SELECT * FROM artist WHERE song_title=(':parameter1');
+        // if ($_POST['choice'] == 'artist' && $_POST['order'] == 'desc') {
+                // $sql = "SELECT * FROM artist WHERE song_title=(':parameter1') ORDER BY DESC";
         // }
-        // if ($_POST['choice'] == 'playlist') {
-                // $sql = "SELECT * FROM playlist WHERE song_title=(':parameter1');
+        // if ($_POST['choice'] == 'playlist' && $_POST['order'] == 'desc') {
+                // $sql = "SELECT * FROM playlist WHERE song_title=(':parameter1')ORDER BY DESC";
+         //}
+         //if ($_POST['choice'] == 'song' && $_POST['order'] == 'asc') {
+                // $sql = "SELECT * FROM songs WHERE song_title=(':parameter1) ORDER BY ASC";
+        // }
+        // if ($_POST['choice'] == 'artist' && $_POST['order'] == 'asc') {
+                // $sql = "SELECT * FROM artist WHERE song_title=(':parameter1') ORDER BY ASC";
+        // }
+        // if ($_POST['choice'] == 'playlist' && $_POST['order'] == 'asc') {
+                // $sql = "SELECT * FROM playlist WHERE song_title=(':parameter1')ORDER BY ASC";
          //}
         
 }

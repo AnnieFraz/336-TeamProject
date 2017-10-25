@@ -26,21 +26,19 @@
           	   	  <option value="playlist"> Playlist </option>
           	   </select>
           	   <select name="choice">
-          	   	  <option value="song"> A-Z </option>
-          	   	  <option value="artist"> Artist </option>
+          	   	  <option value="asc"> A-Z </option>
+          	   	  <option value="desc"> Z-A </option>
           	   </select>
           	   <center><input type='submit' value='Send' name='submit'</center>
           	   </form>
          <?php
          $filter_criteria = (isset($_POST['filter_criteria']) ? $_POST['filter_criteria'] : null);
-         $sql = "SELECT * FROM songs WHERE song_title=(':parameter1
+         $sql = "SELECT * FROM songs WHERE song_title=(':parameter1)";
          
         $stmt = $dbConn->prepare($sql);
 $stmt->execute(array(':parameter1'=>$filter_criteria));
 while($row=$stmt->fetch()){
-    echo "<tr>
-        <td>{$row['song_artist']}</td>
-        </tr>";
+    echo "<tr><td>{$row['song_artist']}</td></tr>";
          //$sql = "";
          
          //if ($_POST['choice'] == 'song') {

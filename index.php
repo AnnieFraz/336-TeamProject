@@ -2,7 +2,7 @@
         $dbHost = getenv('IP');
         $dbPort = 3306;
         $dbName = "team_project";
-        $username = "anniefraz";
+        $username = "rpalaces";
         $password = "";
         
         $dbConn = new PDO("mysql:host=$dbHost;port=$dbPort;dbname=$dbName", $username, $password);

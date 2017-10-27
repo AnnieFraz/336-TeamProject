@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2017 at 10:17 PM
+-- Generation Time: Oct 27, 2017 at 05:30 AM
 -- Server version: 5.5.57-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.22
 
@@ -19,6 +19,65 @@ SET time_zone = "+00:00";
 --
 -- Database: `team_project`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `artist`
+--
+
+CREATE TABLE IF NOT EXISTS `artist` (
+  `artist_id` int(11) NOT NULL AUTO_INCREMENT,
+  `artist_name` varchar(60) NOT NULL,
+  `artist_genre` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`artist_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `artist`
+--
+
+INSERT INTO `artist` (`artist_id`, `artist_name`, `artist_genre`) VALUES
+(1, 'britney', 'pop'),
+(2, 'paramore', 'rock'),
+(3, 'toy story', 'musical'),
+(4, 'frozen', 'musical'),
+(5, 'Modest Mouse', 'rock'),
+(6, 'The 1975', 'Alternative'),
+(7, 'The coathangers', 'punk'),
+(8, 'Herbie Handcock', 'jazz'),
+(9, 'The Smiths', 'Alternative'),
+(10, 'Taylor Swift', 'pop');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `playlist`
+--
+
+CREATE TABLE IF NOT EXISTS `playlist` (
+  `playlist_id` int(11) NOT NULL AUTO_INCREMENT,
+  `playlist_name` varchar(60) NOT NULL,
+  `playlist_date_created` date NOT NULL,
+  `song_id` int(11) NOT NULL,
+  `playlist_description` text NOT NULL,
+  PRIMARY KEY (`playlist_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `playlist`
+--
+
+INSERT INTO `playlist` (`playlist_id`, `playlist_name`, `playlist_date_created`, `song_id`, `playlist_description`) VALUES
+(1, 'Happy Tunes', '2017-10-22', 0, 'a good mood'),
+(2, 'Coffee Music', '0000-00-00', 0, 'For the coffee shop'),
+(3, 'Sad Tunes', '2017-09-22', 0, 'bad mood vibes so need to feel better'),
+(4, 'Disney Music', '2016-10-31', 0, 'songs from disney'),
+(5, 'Songs for the shower', '2017-12-22', 0, 'private playlist'),
+(6, 'daves birthday', '2017-08-31', 0, 'collabroative playlist'),
+(8, 'Love songs', '2017-02-14', 0, 'bae'),
+(9, 'breakup songs', '2017-10-22', 0, 'no more bae'),
+(10, 'christmas music', '2016-12-24', 0, 'Christmas songs');
 
 -- --------------------------------------------------------
 

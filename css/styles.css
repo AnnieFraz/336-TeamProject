@@ -24,13 +24,8 @@ table{
 p{
     font-family: 'Roboto', sans-serif;
 }
-td {
-    border:1px solid black;
-    padding-right: 10px;
-    font-size: 1.3em;
-    font-family: 'Roboto', sans-serif;
-}
-tr, select, form, td{
+
+select, form{
     border: 1px solid black;
     padding-right: 10px;
     font-size: 1em;

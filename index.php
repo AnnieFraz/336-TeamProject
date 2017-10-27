@@ -53,12 +53,12 @@
                 for($i=0; $row = $default_result->fetch(); $i++)
                 {
                 ?>
-                	<tr class="songs">
-                		<td align="left"><?php echo $row['song_title']; ?></td>
-                		<td align="left"><?php echo $row['song_artist']; ?></td>
-                		<td align="left"><?php echo $row['song_album']; ?></td>
-                		<td align="left"><?php echo $row['song_genre']; ?></td>
-                		<td align="left"><?php echo $row['song_year']; ?></td>
+                	<tr class="songs"> 
+                		<td align="left"><input type="checkbox" name='song_title' /><?php echo $row['song_title']; ?></td>
+                                                            		<td align="left"><?php echo $row['song_artist']; ?></td>
+                                                            		<td align="left"><?php echo $row['song_album']; ?></td>
+                                                            		<td align="left"><?php echo $row['song_genre']; ?></td>
+                                                            		<td align="left"><?php echo $row['song_year']; ?></td>
                 	</tr>
                 	<?php
                 }
@@ -118,3 +118,4 @@
       
         </body>
         </html>
+        

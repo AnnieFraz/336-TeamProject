@@ -33,12 +33,18 @@
           	   </form>
          <?php
          $filter_criteria = (isset($_POST['filter_criteria']) ? $_POST['filter_criteria'] : null);
-         $sql = "SELECT * FROM songs WHERE song_title=(':parameter1)";
+         $sql = "SELECT * FROM songs ";
          
         $stmt = $dbConn->prepare($sql);
 $stmt->execute(array(':parameter1'=>$filter_criteria));
 while($row=$stmt->fetch()){
-    echo "<tr><td>{$row['song_artist']}</td></tr>";
+    echo "<table>";
+        echo "<tr>
+        <td>{$row['song_title']} </td>
+        <td>{$row['song_artist']} </td>
+        <td>{$row['song_playlist']} </td>
+        </tr> </br>";
+        echo "</table>";
          //$sql = "";
          
          //if ($_POST['choice'] == 'song' && $_POST['order'] == 'desc') {

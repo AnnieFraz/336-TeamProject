@@ -4,7 +4,7 @@
         $dbPort = 3306;
         $dbName = "team_project";
         
-        $dbConn = new PDO("mysql:host=$dbHost;port=$dbPort;dbname=$dbName", alerodriguezz, "");
+        $dbConn = new PDO("mysql:host=$dbHost;port=$dbPort;dbname=$dbName", anniefraz, "");
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         //default query statement 
@@ -75,11 +75,28 @@
          
          //
          $filter_criteria = (isset($_POST['filter_criteria']) ? $_POST['filter_criteria'] : null);
-         $sql = "SELECT * FROM songs WHERE song_title = ':parameter1' ";
+
+         $sql = "SELECT * FROM songs ";
          
          
         
         $stmt = $dbConn->prepare($sql);
+<<<<<<< HEAD
+$stmt->execute(array(':parameter1'=>$filter_criteria));
+while($row=$stmt->fetch()){
+    echo "<table>";
+        echo "<tr>
+        <td>{$row['song_title']} </td>
+        <td>{$row['song_artist']} </td>
+        <td>{$row['song_playlist']} </td>
+        </tr> </br>";
+        echo "</table>";
+}
+        
+        
+         
+         /*$sql = "";
+=======
         $stmt->execute(array(':parameter1'=> $filter_criteria)); 
         
         
@@ -92,6 +109,7 @@
         while($row=$stmt->fetch()){
           echo "<tr><td>{$row['song_artist']}</td></tr>"; 
          $sql = "";
+>>>>>>> 86fc13e85f3fe14c52979a71ead83b46c37fce8b
          
          if ($_POST['choice'] == 'song' && $_POST['order'] == 'desc') {
                  $sql = "SELECT * FROM songs WHERE song_title= ':parameter1' ORDER BY DESC";
@@ -112,7 +130,7 @@
                  $sql = "SELECT * FROM playlist WHERE song_title=  ':parameter1' ORDER BY ASC";
          }
         
-}
+
          ?>
          
       

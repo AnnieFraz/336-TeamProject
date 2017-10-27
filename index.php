@@ -6,6 +6,10 @@
         
         $dbConn = new PDO("mysql:host=$dbHost;port=$dbPort;dbname=$dbName", alerodriguezz, "");
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        //default query statement 
+        $default= "SELECT * FROM songs ";
+        $default_result = $dbConn->query($default);
 
 ?>
 <html>
@@ -30,6 +34,40 @@
           	   </select>
           	   <center><input type='submit' value='Send' name='submit'/></center>
           	 </form>
+          	 
+          	 <!--default table display -->
+          	 <div  align="center">
+          	     <table id="default_table" border="1" cellspacing="0" cellpadding="2">
+          	          <thead>
+                	<tr>
+                		<th> Title</th>
+                		<th> Artist </th>
+                		<th> Album </th>
+                		<th> Genre</th>
+                		<th> Year</th>
+                	</tr>
+                </thead>
+                 <tbody>
+               
+               <?php
+                for($i=0; $row = $default_result->fetch(); $i++)
+                {
+                ?>
+                	<tr class="songs">
+                		<td align="left"><?php echo $row['song_title']; ?></td>
+                		<td align="left"><?php echo $row['song_artist']; ?></td>
+                		<td align="left"><?php echo $row['song_album']; ?></td>
+                		<td align="left"><?php echo $row['song_genre']; ?></td>
+                		<td align="left"><?php echo $row['song_year']; ?></td>
+                	</tr>
+                	<?php
+                }
+                	?>
+                </tbody>
+          	         
+          	     </table>
+          	     
+          	 </div>
         
 
 <!-- This business happens when they select thir parameters-->        
@@ -39,8 +77,18 @@
          $filter_criteria = (isset($_POST['filter_criteria']) ? $_POST['filter_criteria'] : null);
          $sql = "SELECT * FROM songs WHERE song_title = ':parameter1' ";
          
+         
+        
         $stmt = $dbConn->prepare($sql);
         $stmt->execute(array(':parameter1'=> $filter_criteria)); 
+        
+        
+        
+        
+        
+        
+        
+        //sorted table 
         while($row=$stmt->fetch()){
           echo "<tr><td>{$row['song_artist']}</td></tr>"; 
          $sql = "";

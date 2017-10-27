@@ -1,11 +1,10 @@
 <?php
+
         $dbHost = getenv('IP');
         $dbPort = 3306;
         $dbName = "team_project";
-        $username = "anniefraz";
-        $password = "";
         
-        $dbConn = new PDO("mysql:host=$dbHost;port=$dbPort;dbname=$dbName", $username, $password);
+        $dbConn = new PDO("mysql:host=$dbHost;port=$dbPort;dbname=$dbName", anniefraz, "");
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 ?>
@@ -17,7 +16,7 @@
         
         <body>
             <h1>Playlist Database</h1>
-            <form method="get">
+            <form method="post">
           	  Search for: <input type="text" name="filter_criteria" maxlength="15" value="Enter Here"/>
           	  Filter by: 
           	   <select name="choice">
@@ -30,9 +29,10 @@
           	   	  <option value="desc"> Z-A </option>
           	   </select>
           	   <center><input type='submit' value='Send' name='submit'</center>
-          	   </form>
+          	 </form>
          <?php
          $filter_criteria = (isset($_POST['filter_criteria']) ? $_POST['filter_criteria'] : null);
+
          $sql = "SELECT * FROM songs ";
          
         $stmt = $dbConn->prepare($sql);
@@ -45,28 +45,32 @@ while($row=$stmt->fetch()){
         <td>{$row['song_playlist']} </td>
         </tr> </br>";
         echo "</table>";
-         //$sql = "";
-         
-         //if ($_POST['choice'] == 'song' && $_POST['order'] == 'desc') {
-                // $sql = "SELECT * FROM songs WHERE song_title=(':parameter1) ORDER BY DESC";
-        // }
-        // if ($_POST['choice'] == 'artist' && $_POST['order'] == 'desc') {
-                // $sql = "SELECT * FROM artist WHERE song_title=(':parameter1') ORDER BY DESC";
-        // }
-        // if ($_POST['choice'] == 'playlist' && $_POST['order'] == 'desc') {
-                // $sql = "SELECT * FROM playlist WHERE song_title=(':parameter1')ORDER BY DESC";
-         //}
-         //if ($_POST['choice'] == 'song' && $_POST['order'] == 'asc') {
-                // $sql = "SELECT * FROM songs WHERE song_title=(':parameter1) ORDER BY ASC";
-        // }
-        // if ($_POST['choice'] == 'artist' && $_POST['order'] == 'asc') {
-                // $sql = "SELECT * FROM artist WHERE song_title=(':parameter1') ORDER BY ASC";
-        // }
-        // if ($_POST['choice'] == 'playlist' && $_POST['order'] == 'asc') {
-                // $sql = "SELECT * FROM playlist WHERE song_title=(':parameter1')ORDER BY ASC";
-         //}
-        
 }
+        
+        
+         
+         /*$sql = "";
+         
+         if ($_POST['choice'] == 'song' && $_POST['order'] == 'desc') {
+                // $sql = "SELECT * FROM songs WHERE song_title=(':parameter1) ORDER BY DESC";
+         }
+         if ($_POST['choice'] == 'artist' && $_POST['order'] == 'desc') {
+                // $sql = "SELECT * FROM artist WHERE song_title=(':parameter1') ORDER BY DESC";
+         }
+         if ($_POST['choice'] == 'playlist' && $_POST['order'] == 'desc') {
+                // $sql = "SELECT * FROM playlist WHERE song_title=(':parameter1')ORDER BY DESC";
+         }
+         if ($_POST['choice'] == 'song' && $_POST['order'] == 'asc') {
+                // $sql = "SELECT * FROM songs WHERE song_title=(':parameter1) ORDER BY ASC";
+         }
+         if ($_POST['choice'] == 'artist' && $_POST['order'] == 'asc') {
+                // $sql = "SELECT * FROM artist WHERE song_title=(':parameter1') ORDER BY ASC";
+         }
+        if ($_POST['choice'] == 'playlist' && $_POST['order'] == 'asc') {
+                // $sql = "SELECT * FROM playlist WHERE song_title=(':parameter1')ORDER BY ASC";
+         }*/
+        
+
          ?>
         </body>
         </html>

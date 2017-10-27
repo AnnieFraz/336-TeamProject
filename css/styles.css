@@ -6,6 +6,8 @@ body{
     background: linear-gradient(-200deg, white, green);
     color:black;
     text-align: center;
+    width:100%;
+    height:100%;
 }
 h1,h3{
     font-size:4em;
@@ -14,7 +16,7 @@ h1,h3{
 }
 table{
     margin:0px auto;
-    border:2px solid black;
+    border:0.5px solid black;
     border-spacing:2px 2px;
     text-align:center;
     font-family: 'Roboto', sans-serif;
@@ -22,22 +24,22 @@ table{
 p{
     font-family: 'Roboto', sans-serif;
 }
-.td {
+td {
     border:1px solid black;
     padding-right: 10px;
     font-size: 1.3em;
     font-family: 'Roboto', sans-serif;
 }
-tr, select, form{
-    border:1px solid black;
+tr, select, form, td{
+    border: 1px solid black;
     padding-right: 10px;
-    font-size: 1.3em;
+    font-size: 1em;
     font-family: 'Roboto', sans-serif;
 }
 th{
     border:1px solid black;
     padding-right: 10px;
-    font-size: 1.3em;
+    font-size: 1em;
     text:strong;
     font-family: 'Roboto', sans-serif;
 }

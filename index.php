@@ -4,7 +4,7 @@
         $dbPort = 3306;
         $dbName = "team_project";
         
-        $dbConn = new PDO("mysql:host=$dbHost;port=$dbPort;dbname=$dbName", anniefraz, "");
+        $dbConn = new PDO("mysql:host=$dbHost;port=$dbPort;dbname=$dbName", alerodriguezz, "");
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         //default query statement 
@@ -20,7 +20,7 @@
         
         <body>
             <h1>Playlist Database</h1>
-            <form method="post">
+            <form  id="filter_section"method="post">
           	  Search for: <input type="text" name="filter_criteria" maxlength="15" value="Enter Here"/>
           	  Filter by: 
           	   <select name="choice">
@@ -32,15 +32,73 @@
           	   	  <option value="asc"> A-Z </option>
           	   	  <option value="desc"> Z-A </option>
           	   </select>
-          	   <center><input type='submit' value='Send' name='submit'/></center>
+          	   <center><input type='submit' name='filterBtn' value='Filter'/></center>
           	 </form>
           	 
-          	 <!--default table display -->
+          	 <!-- this section displays default table if the filter button has not been pressed -->
+          	 
+          	 <?php
+          	 
+          	 
+          	 //this variable determines if default or filtered table is displayed (false by default)
+          	 $table_switch=false;
+          	 
+          	 
+          	 
+                                         //this happpens when button is pressed 
+                                        if(isset($_POST['filterBtn']))
+                                        {   //switch is turned on    
+                                            $table_switch=true;
+                                            
+                                                //store search text
+                                                $search_text=$_POST['filter_criteria'];
+                                                
+                                                //store box options 
+                                                $filter_by=$_POST['choice'];
+                                                
+                                                //store order options 
+                                                $order_by=$_POST['order'];
+                                                
+                                                //query database table using default options
+                                                 if ($filter_by == 'song' && $order_by == 'asc') {
+                                                $filter_sql= "SELECT * FROM songs WHERE song_title LIKE '%" . $search_text . "%'  OR 
+                                                                                        song_artist LIKE '%" . $search_text . "%' OR
+                                                                                        song_album LIKE '%" . $search_text . "%' OR
+                                                                                        song_genre LIKE '%" . $search_text . "%' OR
+                                                                                        song_year LIKE '%" . $search_text . "%' 
+                                                                                        ORDER BY song_title ";
+                                                 }
+                                                //query database table using song filter and descending order
+                                                 if ($filter_by == 'song' && $order_by == 'desc') {
+                                                 $filter_sql= "SELECT * FROM songs WHERE song_title LIKE '%" . $search_text . "%'  OR 
+                                                                                         song_artist LIKE '%" . $search_text . "%' OR
+                                                                                         song_album LIKE '%" . $search_text . "%' OR
+                                                                                         song_genre LIKE '%" . $search_text . "%' OR
+                                                                                         song_year LIKE '%" . $search_text . "%' 
+                                                                                         ORDER BY song_title DESC ";
+                                                 }
+                                                
+                                                //query database using song artist filter and ascending order
+                                                
+                                                
+                                                //query database using song artist filter and descending order
+                                                
+                                                
+                                                
+                                                //this is where the query is run depending on the option chosen 
+                                               $filtered_result = $dbConn->query($filter_sql);
+                                        }
+        
+          	 
+          	 ?>
+          	 
+          	 <!--table header -->
           	 <div  align="center">
+          	   <form method= "get">
           	     <table id="default_table" border="1" cellspacing="0" cellpadding="2">
           	          <thead>
                 	<tr>
-                		<th> Title</th>
+                		<th> Song Title</th>
                 		<th> Artist </th>
                 		<th> Album </th>
                 		<th> Genre</th>
@@ -50,15 +108,30 @@
                  <tbody>
                
                <?php
-                for($i=0; $row = $default_result->fetch(); $i++)
+               
+               //this stores the query that determines what table will be displayed 
+               $the_query;
+              
+              //this determines what table will be displayed
+               if($table_switch==true)
+               {
+                   $the_query=$filtered_result;
+               }
+               else
+               {
+                   $the_query=$default_result;
+               }
+               
+                for($i=0; $row = $the_query->fetch(); $i++)
                 {
                 ?>
                 	<tr class="songs"> 
-                		<td align="left"><input type="checkbox" name='song_title' /><?php echo $row['song_title']; ?></td>
-                                                            		<td align="left"><?php echo $row['song_artist']; ?></td>
-                                                            		<td align="left"><?php echo $row['song_album']; ?></td>
-                                                            		<td align="left"><?php echo $row['song_genre']; ?></td>
-                                                            		<td align="left"><?php echo $row['song_year']; ?></td>
+                		<td align="left"><input type="checkbox" name="cart_items" value='song_title' />
+                		                     <?php echo $row['song_title']; ?></td>
+                            <td align="left"><?php echo $row['song_artist']; ?></td>
+                            <td align="left"><?php echo $row['song_album']; ?></td>
+                        	<td align="left"><?php echo $row['song_genre']; ?></td>
+                    		<td align="left"><?php echo $row['song_year']; ?></td>
                 	</tr>
                 	<?php
                 }
@@ -67,49 +140,26 @@
           	         
           	     </table>
           	     
+          	     </form>
+          	     
           	 </div>
         
 
 <!-- This business happens when they select thir parameters-->        
          <?php
-         
-         //
-         $filter_criteria = (isset($_POST['filter_criteria']) ? $_POST['filter_criteria'] : null);
+         //array holding checked boxes 
+         $checked = $_GET['cart_items'];
 
-         $sql = "SELECT * FROM songs ";
+            for($i=0; $i < count($checked); $i++){
+                echo "Selected " . $checked[$i] . "<br/>";
+            }
          
-         
-        
-        $stmt = $dbConn->prepare($sql);
-<<<<<<< HEAD
-$stmt->execute(array(':parameter1'=>$filter_criteria));
-while($row=$stmt->fetch()){
-    echo "<table>";
-        echo "<tr>
-        <td>{$row['song_title']} </td>
-        <td>{$row['song_artist']} </td>
-        <td>{$row['song_playlist']} </td>
-        </tr> </br>";
-        echo "</table>";
-}
-        
-        
-         
-         /*$sql = "";
-=======
-        $stmt->execute(array(':parameter1'=> $filter_criteria)); 
-        
-        
-        
-        
-        
-        
+         /*
         
         //sorted table 
         while($row=$stmt->fetch()){
           echo "<tr><td>{$row['song_artist']}</td></tr>"; 
          $sql = "";
->>>>>>> 86fc13e85f3fe14c52979a71ead83b46c37fce8b
          
          if ($_POST['choice'] == 'song' && $_POST['order'] == 'desc') {
                  $sql = "SELECT * FROM songs WHERE song_title= ':parameter1' ORDER BY DESC";
@@ -136,4 +186,6 @@ while($row=$stmt->fetch()){
       
         </body>
         </html>
+        */
         
+        ?>

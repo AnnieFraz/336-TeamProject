@@ -79,10 +79,24 @@
                                                  }
                                                 
                                                 //query database using song artist filter and ascending order
-                                                
+                                            if ($filter_by == 'artist' && $order_by == 'asc'){
+                                                 $filter_sql= "SELECT * FROM songs WHERE song_title LIKE '%" . $search_text . "%'  OR 
+                                                                                         song_artist LIKE '%" . $search_text . "%' OR
+                                                                                         song_album LIKE '%" . $search_text . "%' OR
+                                                                                         song_genre LIKE '%" . $search_text . "%' OR
+                                                                                         song_year LIKE '%" . $search_text . "%' 
+                                                                                         ORDER BY song_album ";
+                                            }
                                                 
                                                 //query database using song artist filter and descending order
-                                                
+                                                      if ($filter_by == 'artist' && $order_by == 'desc'){
+                                                 $filter_sql= "SELECT * FROM songs WHERE song_title LIKE '%" . $search_text . "%'  OR 
+                                                                                         song_artist LIKE '%" . $search_text . "%' OR
+                                                                                         song_album LIKE '%" . $search_text . "%' OR
+                                                                                         song_genre LIKE '%" . $search_text . "%' OR
+                                                                                         song_year LIKE '%" . $search_text . "%' 
+                                                                                         ORDER BY song_album DESC ";
+                                            }
                                                 
                                                 
                                                 //this is where the query is run depending on the option chosen 

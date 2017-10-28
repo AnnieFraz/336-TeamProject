@@ -49,7 +49,7 @@ $dbHost = getenv('IP');
 		
 $stmt = $dbConn->query($sql);	
 $results = $stmt->fetchAll();
-echo "<form action='shopping.php' method='post'>
+echo "<form action='cart.php' method='post'>
     <table border='1'><tr><td>Add</td><td>Title</td><td>Artist</td><td>Album</td><td>Genre</td></tr>";
 foreach ($results as $record) {
     echo "<tr><td>";

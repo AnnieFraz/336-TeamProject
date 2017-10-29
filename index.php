@@ -10,6 +10,7 @@ $dbHost = getenv('IP');
         
         $dbConn = new PDO("mysql:host=$dbHost;port=$dbPort;dbname=$dbName", $username, $password);
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+        
 ?>
 <html>
         <head>
@@ -24,8 +25,8 @@ $dbHost = getenv('IP');
           	  Search for: <input type="text" name="fil_term" maxlength="60" value="Enter Here"/>
           	  Filter by: 
           	   <select name="choice">
+          	      <option value="name"> Artist </option>
           	   	  <option value="song_title"> Title </option>
-          	   	  <option value="name"> Artist </option>
           	   	  <option value="genre_name"> Genre </option>
           	   	  <option value="album_name"> Album </option>
           	   </select>
@@ -50,6 +51,7 @@ $dbHost = getenv('IP');
 		ORDER BY song_title $order";
 		
 $stmt = $dbConn->query($sql);	
+<<<<<<< HEAD
 $results = $stmt->fetchAll(); ?>
 
 <form action="cart.php" method="get">
@@ -72,14 +74,16 @@ foreach ($results as $record) {
     </tr>
     </table>
     </form><br>
+
         </body>
 </html>
 <?php
-
 
 /*$checked = $_GET['cart_list[]'];
 for($i=0; $i < count($checked); $i++){
     echo "Selected " . $checked[$i] . "<br/>";
 }
 */
+
+
 ?>

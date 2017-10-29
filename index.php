@@ -2,7 +2,7 @@
 
         $dbHost = getenv('IP');
         $dbPort = 3306;
-        $dbName = "team_project";
+        $dbName = "taem_project";
         
         $dbConn = new PDO("mysql:host=$dbHost;port=$dbPort;dbname=$dbName", anniefraz, "");
         $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -16,6 +16,7 @@
         <head>
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <title>Playlist Database</title>
         </head>
         
         <body>
@@ -23,16 +24,18 @@
             <form method="post">
           	  Search for: <input type="text" name="filter_criteria" maxlength="15" value="Enter Here"/>
           	  Filter by: 
-          	   <select name="choice">
-          	   	  <option value="song"> Song </option>
-          	   	  <option value="artist"> Artist </option>
-          	   	  <option value="playlist"> Playlist </option>
+          	   	  <select name="choice">
+          	   	  <option value="song_title"> Title </option>
+          	   	  <option value="name"> Artist </option>
+          	   	  <option value="genre_name"> Genre </option>
+          	   	  <option value="album_name"> Album </option>
+          	   </select>
           	   </select>
           	   <select name="order">
           	   	  <option value="asc"> A-Z </option>
           	   	  <option value="desc"> Z-A </option>
           	   </select>
-          	   <center><input type='submit' value='Send' name='submit'/></center>
+          	   <center><input type='submit' value='Search' name='submit'/></center>
           	 </form>
           	 
           	 <!--default table display -->
@@ -62,75 +65,36 @@
                 	</tr>
                 	<?php
                 }
-                	?>
-                </tbody>
-          	         
-          	     </table>
-          	     
-          	 </div>
-        
-
-<!-- This business happens when they select thir parameters-->        
-         <?php
+                	?><?php
+         $searchkey = $_POST['fil_term'];
+         $choice = $_POST['choice'];
+         $order =$_POST['order'];
          
-         //
-         $filter_criteria = (isset($_POST['filter_criteria']) ? $_POST['filter_criteria'] : null);
-
-         $sql = "SELECT * FROM songs ";
-         
-         
-        
-        $stmt = $dbConn->prepare($sql);
-<<<<<<< HEAD
-$stmt->execute(array(':parameter1'=>$filter_criteria));
-while($row=$stmt->fetch()){
-    echo "<table>";
-        echo "<tr>
-        <td>{$row['song_title']} </td>
-        <td>{$row['song_artist']} </td>
-        <td>{$row['song_playlist']} </td>
-        </tr> </br>";
-        echo "</table>";
-}
-        
-        
-         
-         /*$sql = "";
-=======
-        $stmt->execute(array(':parameter1'=> $filter_criteria)); 
-        
-        
-        
-        
-        
-        
-        
-        //sorted table 
-        while($row=$stmt->fetch()){
-          echo "<tr><td>{$row['song_artist']}</td></tr>"; 
-         $sql = "";
->>>>>>> 86fc13e85f3fe14c52979a71ead83b46c37fce8b
-         
-         if ($_POST['choice'] == 'song' && $_POST['order'] == 'desc') {
-                 $sql = "SELECT * FROM songs WHERE song_title= ':parameter1' ORDER BY DESC";
-         }
-         if ($_POST['choice'] == 'artist' && $_POST['order'] == 'desc') {
-                 $sql = "SELECT * FROM artist WHERE song_title= ':parameter1' ORDER BY DESC";
-         }
-         if ($_POST['choice'] == 'playlist' && $_POST['order'] == 'desc') {
-                 $sql = "SELECT * FROM playlist WHERE song_title= ':parameter1' ORDER BY DESC";
-         }
-         if ($_POST['choice'] == 'song' && $_POST['order'] == 'asc') {
-                $sql = "SELECT * FROM songs WHERE song_title= ':parameter1' ORDER BY ASC";
-         }
-         if ($_POST['choice'] == 'artist' && $_POST['order'] == 'asc') {
-                 $sql = "SELECT * FROM artist WHERE song_title= ':parameter1' ORDER BY ASC";
-         }
-        if ($_POST['choice'] == 'playlist' && $_POST['order'] == 'asc') {
-                 $sql = "SELECT * FROM playlist WHERE song_title=  ':parameter1' ORDER BY ASC";
-         }
-        
-
+        $sql = "SELECT songs.song_title, artist.name, albums.album_name, genre.genre_name
+		FROM  albums
+		INNER JOIN genre on albums.genre_id=genre.genre_id
+		INNER JOIN artist ON albums.artist_id=artist.artist_id
+		INNER JOIN songs ON albums.album_id=songs.album_id
+		WHERE $choice LIKE '$searchkey'
+		ORDER BY song_title $order";
+		
+$stmt = $dbConn->query($sql);	
+$results = $stmt->fetchAll();
+echo "<form action='cart.php' method='post'>
+    <table border='1'><tr><td>Add</td><td>Title</td><td>Artist</td><td>Album</td><td>Genre</td></tr>";
+foreach ($results as $record) {
+    echo "<tr><td>";
+	echo "</td> <td>";
+	echo $record['song_title'];
+	echo "</td> <td>";
+	echo "<a href='desc/".$record['name'].".html'>".$record['name']."</a>";
+	echo "</td><td>";
+	echo $record['album_name'];
+	echo "</td><td>";
+	echo  $record['genre_name'];
+	echo "</td></tr>";
+}	 
+echo '</table><br>';
          ?>
          
       

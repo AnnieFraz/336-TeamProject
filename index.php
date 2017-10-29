@@ -1,8 +1,11 @@
 <?php
+
+session_start();
+
 $dbHost = getenv('IP');
         $dbPort = 3306;
         $dbName = "taem_project";
-        $username = "anniefraz";
+        $username = "alerodriguezz";
         $password = "";
         
         $dbConn = new PDO("mysql:host=$dbHost;port=$dbPort;dbname=$dbName", $username, $password);
@@ -12,6 +15,7 @@ $dbHost = getenv('IP');
         <head>
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <meta charset="utf-8"/>
         </head>
         
         <body>
@@ -46,24 +50,36 @@ $dbHost = getenv('IP');
 		ORDER BY song_title $order";
 		
 $stmt = $dbConn->query($sql);	
-$results = $stmt->fetchAll();
-echo "<form action='cart.php' method='post'>
-    <table border='1'><tr><td>Add</td><td>Title</td><td>Artist</td><td>Album</td><td>Genre</td></tr>";
+$results = $stmt->fetchAll(); ?>
+
+<form action="cart.php" method="get">
+    <table border="1">
+    <tr>
+        <td>Add</td><td>Title</td><td>Artist</td><td>Album</td><td>Genre</td>
+        </tr>
+        
+<?php        
 foreach ($results as $record) {
-    echo "<tr><td>";
-	echo "</td> <td>";
-	echo $record['song_title'];
-	echo "</td> <td>";
-	echo "<a href='desc/".$record['name'].".html'>".$record['name']."</a>";
-	echo "</td><td>";
-	echo $record['album_name'];
-	echo "</td><td>";
-	echo  $record['genre_name'];
-	echo "</td></tr>";
-}	 
-echo '</table><br>';
-         ?>
-         
-      
+    
+    ?>
+    <tr> 
+            <td><input type="checkbox" name="cart_list[]" value="<?php $record['song_title']?>"></td> 
+                                                                        <td><?php echo $record['song_title']; ?></td> 
+                                                                        <td><a href="desc/<?php $record['name'] ?>.html"><?php echo $record['name']?></a></td>
+                                                                        <td><?php echo $record['album_name']; ?> </td>
+                                                                        <td><?php echo $record['genre_name']; } ?> </td>
+                                                                        <input type='submit' value='Add to Cart' name='cart'/>
+    </tr>
+    </table>
+    </form><br>
         </body>
-        </html>
+</html>
+<?php
+
+
+/*$checked = $_GET['cart_list[]'];
+for($i=0; $i < count($checked); $i++){
+    echo "Selected " . $checked[$i] . "<br/>";
+}
+*/
+?>
